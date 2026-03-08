@@ -1,9 +1,14 @@
 import Fastify from "fastify"
+import cors from "@fastify/cors"
 import { peopleRoutes } from "./routes/peopleRoutes"
 import { eprRoutes } from "./routes/eprRoutes"
 
-
 const app = Fastify()
+
+// enable CORS
+app.register(cors, {
+  origin: true
+})
 
 app.register(peopleRoutes)
 app.register(eprRoutes)
