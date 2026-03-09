@@ -24,8 +24,8 @@ CREATE TABLE enrollments (
 
 CREATE TABLE epr_records (
     id SERIAL PRIMARY KEY,
-    person_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-    evaluator_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    person_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    evaluator_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     role_type TEXT CHECK (role_type IN ('student','instructor')),
     period_start DATE,
     period_end DATE,
