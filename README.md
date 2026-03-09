@@ -85,7 +85,7 @@ This feature uses **rule-based logic** to generate contextual feedback depending
 The UI includes a **“Generate Suggested Remarks”** button that automatically fills the remarks field.
 
 
-
+---
 # Tech Stack
 
 Frontend
@@ -102,11 +102,11 @@ Backend
 * TypeScript
 * PostgreSQL
 
-
+---
 
 # Project Structure
 
-
+```
 backend/
   controllers/
   routes/
@@ -118,9 +118,9 @@ frontend/
   api/
   types/
 
+```
 
-=
-
+---
 # Setup Instructions
 
 ## 1. Clone the repository
