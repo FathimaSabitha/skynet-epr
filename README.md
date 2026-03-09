@@ -168,6 +168,9 @@ Run migrations:
 npm run migrate
 ```
 
+```
+npm run seed
+```
 
 # Run Backend
 

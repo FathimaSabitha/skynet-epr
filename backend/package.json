@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev src/server.ts"
+    "dev": "ts-node-dev src/server.ts",
+    "migrate": "psql skynet_epr < src/db/schema.sql",
+    "seed": "psql skynet_epr < src/db/seed.sql"
   },
   "keywords": [],
   "author": "",
