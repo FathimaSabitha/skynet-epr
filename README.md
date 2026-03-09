@@ -168,13 +168,6 @@ Run migrations:
 npm run migrate
 ```
 
-Seed sample data:
-
-```
-npm run seed
-```
-
----
 
 # Run Backend
 
