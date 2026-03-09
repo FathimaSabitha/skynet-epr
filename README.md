@@ -149,7 +149,7 @@ npm install
 Create environment variables:
 
 ```
-DATABASE_URL=postgres://user:password@localhost:5432/skynet
+DATABASE_URL=postgres://sabi@localhost:5432/skynet_epr
 ```
 
 ---
