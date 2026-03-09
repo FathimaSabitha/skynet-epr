@@ -4,6 +4,8 @@ import {
   getEprById,
   createEpr,
   updateEpr,
+  getEprSummary,
+  generateEprRemarks
 } from "../services/eprService"
 
 
@@ -34,4 +36,24 @@ export async function updateEprController(request:FastifyRequest, reply:FastifyR
     const {id} = request.params as any
     const epr = await updateEpr(Number(id), request.body)
     reply.send(epr)
+}
+//AVG RATING
+export async function getEprSummaryController(
+  request: FastifyRequest,
+  reply: FastifyReply
+) {
+  const { personId } = request.params as any
+
+  const summary = await getEprSummary(Number(personId))
+
+  reply.send(summary)
+}
+//AI ASSISTANT
+export async function assistEprController(
+  request: FastifyRequest,
+  reply: FastifyReply
+) {
+  const suggestion = generateEprRemarks(request.body)
+
+  reply.send(suggestion)
 }

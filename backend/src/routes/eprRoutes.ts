@@ -4,7 +4,10 @@ import {
   getEprController,
   createEprController,
   updateEprController,
+  getEprSummaryController,
+  assistEprController
 } from "../controllers/eprController"
+
 
 export async function eprRoutes(app: FastifyInstance) {
 
@@ -16,4 +19,8 @@ export async function eprRoutes(app: FastifyInstance) {
 
   app.patch("/api/epr/:id", updateEprController)
 
+  app.get("/api/epr/summary/:personId", getEprSummaryController)
+  
+  app.post("/api/epr/assist", assistEprController)
+  
 }

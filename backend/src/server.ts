@@ -7,7 +7,9 @@ const app = Fastify()
 
 // enable CORS
 app.register(cors, {
-  origin: true
+  origin: true,
+  methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 })
 
 app.register(peopleRoutes)

@@ -12,6 +12,7 @@ export default function PeopleList({ onSelect }: Props) {
   const [people, setPeople] = useState<Person[]>([]);
   const [role, setRole] = useState<RoleFilter>("");
   const [search, setSearch] = useState("");
+ 
 
   useEffect(() => {
     const fetchPeople = async () => {
@@ -27,6 +28,8 @@ export default function PeopleList({ onSelect }: Props) {
 
     fetchPeople();
   }, [role, search]);
+
+
 
   return (
     <div className="p-6 border-r h-screen bg-white">

@@ -3,7 +3,6 @@ import { api } from "../api/api";
 import type { Person, Epr } from "../type";
 import EprModal from "./EprModal";
 
-
 type Props = {
   person: Person | null;
 };
@@ -12,17 +11,27 @@ export default function PersonDetails({ person }: Props) {
   const [eprs, setEprs] = useState<Epr[]>([]);
   const [selectedEpr, setSelectedEpr] = useState<Epr | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const [summary, setSummary] = useState<any>(null);
 
   const refreshEprs = async () => {
-  if (!person) return
+    if (!person) return;
 
-  const res = await api.get<Epr[]>(`/api/epr?personId=${person.id}`)
-  setEprs(res.data)
-}
+    const res = await api.get<Epr[]>(`/api/epr?personId=${person.id}`);
+    setEprs(res.data);
+  };
 
- useEffect(() => {
-  refreshEprs()
-}, [person])
+  useEffect(() => {
+    if (!person) return;
+
+    refreshEprs();
+
+    const loadSummary = async () => {
+      const res = await api.get(`/api/epr/summary/${person.id}`);
+      setSummary(res.data);
+    };
+
+    loadSummary();
+  }, [person]);
 
   if (!person) {
     return (
@@ -50,6 +59,46 @@ export default function PersonDetails({ person }: Props) {
           New EPR
         </button>
       </div>
+      {summary && (
+        <div className="bg-white border rounded-xl p-5 shadow-sm mb-6">
+          <h3 className="font-medium mb-3">Performance Snapshot</h3>
+
+          <div className="text-3xl font-bold mb-2">
+            ⭐ {summary.averageOverallRating?.toFixed(1)}
+          </div>
+
+          <div className="flex gap-2 mb-4">
+            <span className="px-2 py-1 text-xs bg-indigo-100 text-indigo-700 rounded">
+              Technical {summary.averageTechnicalRating?.toFixed(1)}
+            </span>
+
+            <span className="px-2 py-1 text-xs bg-purple-100 text-purple-700 rounded">
+              Non-Technical {summary.averageNonTechnicalRating?.toFixed(1)}
+            </span>
+          </div>
+
+          <div>
+            <p className="text-xs text-gray-500 mb-2">Recent Trend</p>
+
+            {summary.lastThreePeriods?.map((p: any, i: number) => {
+              const label = new Date(p.periodLabel).toLocaleDateString(
+                "en-US",
+                {
+                  month: "short",
+                  year: "numeric",
+                },
+              );
+
+              return (
+                <div key={i} className="flex justify-between text-sm py-1">
+                  <span>{label}</span>
+                  <span className="font-medium">{p.overallRating}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       <h3 className="font-medium mb-3">Performance Records</h3>
 
@@ -95,12 +144,12 @@ export default function PersonDetails({ person }: Props) {
 
       {showModal && person && (
         <EprModal
-  epr={selectedEpr}
-  personId={person.id}
-  personName={person.name}
-  onClose={()=>setShowModal(false)}
-  onSaved={refreshEprs}
-/>
+          epr={selectedEpr}
+          personId={person.id}
+          personName={person.name}
+          onClose={() => setShowModal(false)}
+          onSaved={refreshEprs}
+        />
       )}
     </div>
   );
